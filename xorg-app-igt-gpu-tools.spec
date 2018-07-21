@@ -1,12 +1,12 @@
 Summary:	Tools for Intel DRM driver
 Summary(pl.UTF-8):	Narzędzia do sterownika Intel DRM
-Name:		xorg-app-intel-gpu-tools
-Version:	1.22
-Release:	2
+Name:		xorg-app-igt-gpu-tools
+Version:	1.23
+Release:	1
 License:	MIT
 Group:		X11/Applications
-Source0:	https://xorg.freedesktop.org/archive/individual/app/intel-gpu-tools-%{version}.tar.xz
-# Source0-md5:	965c591b23a132084113c2a0604f537a
+Source0:	https://xorg.freedesktop.org/archive/individual/app/igt-gpu-tools-%{version}.tar.xz
+# Source0-md5:	04c1f10d6fd85e079271540b0ea786e9
 Patch1:		%{name}-update.patch
 URL:		http://intellinuxgraphics.org/
 BuildRequires:	alsa-lib-devel
@@ -49,6 +49,7 @@ Requires:	cairo >= 1.12.0
 Requires:	libdrm >= 2.4.82
 Requires:	xorg-lib-libXrandr >= 1.3
 Requires:	xorg-lib-libpciaccess >= 0.10
+Obsoletes:	xorg-app-intel-gpu-tools < 1.23
 # libunwind is required
 ExclusiveArch:	%{ix86} %{x8664} x32 %{arm} hppa ia64 mips ppc ppc64 sh
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -62,7 +63,7 @@ Ten pakiet zawiera zestaw narzędzi do rozwijania i testowania
 sterownika Intel DRM.
 
 %prep
-%setup -q -n intel-gpu-tools-%{version}
+%setup -q -n igt-gpu-tools-%{version}
 %patch1 -p1
 
 %build
@@ -93,8 +94,8 @@ rm -rf $RPM_BUILD_ROOT
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/intel_aubdump.la
 
 # tests
-%{__rm} -r $RPM_BUILD_ROOT%{_libexecdir}/intel-gpu-tools \
-	$RPM_BUILD_ROOT%{_datadir}/intel-gpu-tools
+%{__rm} -r $RPM_BUILD_ROOT%{_libexecdir}/igt-gpu-tools \
+	$RPM_BUILD_ROOT%{_datadir}/igt-gpu-tools
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -112,5 +113,5 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/intel-gpu-overlay
 %{_pkgconfigdir}/intel-gen4asm.pc
 %endif
-%{_gtkdocdir}/intel-gpu-tools
+%{_gtkdocdir}/igt-gpu-tools
 %{_mandir}/man1/intel_*.1*

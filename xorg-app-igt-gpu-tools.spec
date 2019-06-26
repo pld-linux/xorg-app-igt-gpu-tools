@@ -36,6 +36,7 @@ BuildRequires:	pixman-devel >= 0.36.0
 BuildRequires:	pkgconfig
 BuildRequires:	procps-devel >= 1:3.3
 BuildRequires:	python3-devel >= 1:3.0
+BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	sed >= 4.0
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	udev-devel

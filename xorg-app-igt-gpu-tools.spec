@@ -1,15 +1,16 @@
 Summary:	Tools for Intel DRM driver
 Summary(pl.UTF-8):	Narzędzia do sterownika Intel DRM
 Name:		xorg-app-igt-gpu-tools
-Version:	1.24
-Release:	3
+Version:	1.25
+Release:	1
 License:	MIT
 Group:		X11/Applications
 Source0:	https://xorg.freedesktop.org/archive/individual/app/igt-gpu-tools-%{version}.tar.xz
-# Source0-md5:	0e0b4a1a80dc2e09c2705e0c5159e0a1
+# Source0-md5:	4c148d3be97607859168ed70b15e8b2f
 URL:		http://intellinuxgraphics.org/
 BuildRequires:	alsa-lib-devel
 BuildRequires:	bison
+# TODO: >= 1.17.2 when stable release available
 BuildRequires:	cairo-devel >= 1.12.0
 BuildRequires:	curl-devel
 # rst2man
@@ -27,9 +28,9 @@ BuildRequires:	gsl-devel
 BuildRequires:	gtk-doc >= 1.14
 BuildRequires:	json-c-devel
 BuildRequires:	kmod-devel
-BuildRequires:	libdrm-devel >= 2.4.82
+BuildRequires:	libdrm-devel >= 2.4.92
 BuildRequires:	libunwind-devel
-BuildRequires:	meson >= 0.47.0
+BuildRequires:	meson >= 0.47.2
 BuildRequires:	ninja >= 1.5
 BuildRequires:	peg
 BuildRequires:	pixman-devel >= 0.36.0
@@ -50,7 +51,7 @@ BuildRequires:	xorg-proto-dri2proto-devel >= 2.6
 BuildRequires:	xorg-util-util-macros >= 1.16
 BuildRequires:	xz
 Requires:	cairo >= 1.12.0
-Requires:	libdrm >= 2.4.82
+Requires:	libdrm >= 2.4.92
 Requires:	xorg-lib-libXrandr >= 1.3
 Requires:	xorg-lib-libpciaccess >= 0.10
 Obsoletes:	xorg-app-intel-gpu-tools < 1.23
@@ -65,6 +66,19 @@ DRM driver.
 %description -l pl.UTF-8
 Ten pakiet zawiera zestaw narzędzi do rozwijania i testowania
 sterownika Intel DRM.
+
+%package devel
+Summary:	Header files for i915 perf library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki i915 perf
+Group:		Development/Libraries
+Requires:	%{name} = %{version}-%{release}
+Requires:	libdrm-devel >= 2.4.92
+
+%description devel
+Header files for i915 perf library.
+
+%description devel -l pl.UTF-8
+Pliki nagłówkowe biblioteki i915 perf.
 
 %prep
 %setup -q -n igt-gpu-tools-%{version}
@@ -92,15 +106,18 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc COPYING NEWS README.md TODO.rst
+%doc COPYING MAINTAINERS NEWS README.md
+%attr(755,root,root) %{_bindir}/amd_hdmi_compliance
 %attr(755,root,root) %{_bindir}/dpcd_reg
+%attr(755,root,root) %{_bindir}/i915-perf-*
 %attr(755,root,root) %{_bindir}/igt_results
 %attr(755,root,root) %{_bindir}/igt_resume
 %attr(755,root,root) %{_bindir}/igt_runner
 %attr(755,root,root) %{_bindir}/igt_stats
 %attr(755,root,root) %{_bindir}/intel_*
-%attr(755,root,root) %{_libdir}/intel_aubdump.so*
-%attr(755,root,root) %{_libdir}/libigt.so*
+%attr(755,root,root) %{_bindir}/lsgpu
+%attr(755,root,root) %{_libdir}/libi915_perf.so.0
+%attr(755,root,root) %{_libdir}/libigt.so.0
 %ifarch %{ix86} %{x8664} x32
 %attr(755,root,root) %{_bindir}/intel-gen4asm
 %attr(755,root,root) %{_bindir}/intel-gen4disasm
@@ -109,6 +126,14 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 %dir %{_datadir}/igt-gpu-tools
 %{_datadir}/igt-gpu-tools/registers
+%{_datadir}/igt-gpu-tools/blacklist*.txt
 %{_datadir}/igt-gpu-tools/*.png
 %{_gtkdocdir}/igt-gpu-tools
 %{_mandir}/man1/intel_*.1*
+
+%files devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libi915_perf.so
+%attr(755,root,root) %{_libdir}/libigt.so
+%{_includedir}/i915-perf
+%{_pkgconfigdir}/i915-perf.pc

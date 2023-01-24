@@ -1,12 +1,12 @@
 Summary:	Tools for Intel DRM driver
 Summary(pl.UTF-8):	Narzędzia do sterownika Intel DRM
 Name:		xorg-app-igt-gpu-tools
-Version:	1.26
-Release:	2
+Version:	1.27
+Release:	1
 License:	MIT
 Group:		X11/Applications
 Source0:	https://xorg.freedesktop.org/archive/individual/app/igt-gpu-tools-%{version}.tar.xz
-# Source0-md5:	6781293a2c312bb625aa5cbe5506a9bf
+# Source0-md5:	80ca1099b65bbf5fce8f36ddde34edfc
 URL:		http://intellinuxgraphics.org/
 BuildRequires:	alsa-lib-devel
 BuildRequires:	bison
@@ -85,7 +85,7 @@ Pliki nagłówkowe biblioteki i915 perf.
 
 %build
 %meson build \
-	-Dbuild_chamelium=enabled
+	-Dchamelium=enabled
 
 %ninja_build -C build
 
@@ -95,8 +95,10 @@ rm -rf $RPM_BUILD_ROOT
 %ninja_install -C build
 
 # tests
-%{__rm} -r $RPM_BUILD_ROOT%{_libexecdir}/igt-gpu-tools \
+%{__rm} \
+	$RPM_BUILD_ROOT%{_bindir}/code_cov_* \
 	$RPM_BUILD_ROOT%{_datadir}/igt-gpu-tools/{README,*.testlist}
+%{__rm} -r $RPM_BUILD_ROOT%{_libexecdir}/igt-gpu-tools
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -110,6 +112,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/amd_hdmi_compliance
 %attr(755,root,root) %{_bindir}/dpcd_reg
 %attr(755,root,root) %{_bindir}/i915-perf-*
+%attr(755,root,root) %{_bindir}/igt_comms_decoder
 %attr(755,root,root) %{_bindir}/igt_results
 %attr(755,root,root) %{_bindir}/igt_resume
 %attr(755,root,root) %{_bindir}/igt_runner
@@ -117,7 +120,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/intel_*
 %attr(755,root,root) %{_bindir}/lsgpu
 %attr(755,root,root) %{_bindir}/msm_dp_compliance
-%attr(755,root,root) %{_libdir}/libi915_perf.so.1
+%attr(755,root,root) %{_libdir}/libi915_perf.so.1.5
 %attr(755,root,root) %{_libdir}/libigt.so.0
 %ifarch %{ix86} %{x8664} x32
 %attr(755,root,root) %{_bindir}/intel-gen4asm

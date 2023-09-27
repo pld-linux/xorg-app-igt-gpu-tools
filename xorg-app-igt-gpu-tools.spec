@@ -1,17 +1,16 @@
 Summary:	Tools for Intel DRM driver
 Summary(pl.UTF-8):	Narzędzia do sterownika Intel DRM
 Name:		xorg-app-igt-gpu-tools
-Version:	1.27.1
+Version:	1.28
 Release:	1
 License:	MIT
 Group:		X11/Applications
 Source0:	https://xorg.freedesktop.org/archive/individual/app/igt-gpu-tools-%{version}.tar.xz
-# Source0-md5:	62135c26178dc8121e619c4c19d7edcb
+# Source0-md5:	5c11ed8a9698df5fd6663b027168ab1f
 URL:		http://intellinuxgraphics.org/
 BuildRequires:	alsa-lib-devel
 BuildRequires:	bison
-# TODO: >= 1.17.2 when stable release available
-BuildRequires:	cairo-devel >= 1.12.0
+BuildRequires:	cairo-devel >= 1.17.2
 BuildRequires:	curl-devel
 # rst2man
 BuildRequires:	docutils
@@ -50,7 +49,7 @@ BuildRequires:	xorg-lib-libpciaccess-devel >= 0.10
 BuildRequires:	xorg-proto-dri2proto-devel >= 2.6
 BuildRequires:	xorg-util-util-macros >= 1.16
 BuildRequires:	xz
-Requires:	cairo >= 1.12.0
+Requires:	cairo >= 1.17.2
 Requires:	libdrm >= 2.4.92
 Requires:	xorg-lib-libXrandr >= 1.3
 Requires:	xorg-lib-libpciaccess >= 0.10
@@ -83,11 +82,16 @@ Pliki nagłówkowe biblioteki i915 perf.
 %prep
 %setup -q -n igt-gpu-tools-%{version}
 
+%{__sed} -i -e '1s,/usr/bin/env python3,%{__python3},' tools/intel-gfx-fw-info
+
 %build
 %meson build \
 	-Dchamelium=enabled
 
 %ninja_build -C build
+
+# install fails without prebuilt docs
+%ninja_build -C build igt-gpu-tools-doc
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -111,15 +115,18 @@ rm -rf $RPM_BUILD_ROOT
 %doc COPYING MAINTAINERS NEWS README.md
 %attr(755,root,root) %{_bindir}/amd_hdmi_compliance
 %attr(755,root,root) %{_bindir}/dpcd_reg
+%attr(755,root,root) %{_bindir}/gputop
 %attr(755,root,root) %{_bindir}/i915-perf-*
 %attr(755,root,root) %{_bindir}/igt_comms_decoder
 %attr(755,root,root) %{_bindir}/igt_results
 %attr(755,root,root) %{_bindir}/igt_resume
 %attr(755,root,root) %{_bindir}/igt_runner
 %attr(755,root,root) %{_bindir}/igt_stats
+%attr(755,root,root) %{_bindir}/intel-gfx-fw-info
 %attr(755,root,root) %{_bindir}/intel_*
 %attr(755,root,root) %{_bindir}/lsgpu
 %attr(755,root,root) %{_bindir}/msm_dp_compliance
+%attr(755,root,root) %{_bindir}/xe_reg
 %attr(755,root,root) %{_libdir}/libi915_perf.so.1.5
 %attr(755,root,root) %{_libdir}/libigt.so.0
 %ifarch %{ix86} %{x8664} x32
@@ -131,6 +138,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_datadir}/igt-gpu-tools
 %{_datadir}/igt-gpu-tools/registers
 %{_datadir}/igt-gpu-tools/blacklist*.txt
+%{_datadir}/igt-gpu-tools/xe.blocklist.txt
+%{_datadir}/igt-gpu-tools/*.blacklist
 %{_datadir}/igt-gpu-tools/*.png
 %{_gtkdocdir}/igt-gpu-tools
 %{_mandir}/man1/intel_*.1*

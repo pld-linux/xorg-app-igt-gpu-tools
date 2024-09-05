@@ -1,12 +1,12 @@
 Summary:	Tools for Intel DRM driver
 Summary(pl.UTF-8):	Narzędzia do sterownika Intel DRM
 Name:		xorg-app-igt-gpu-tools
-Version:	1.28
-Release:	3
+Version:	1.29
+Release:	1
 License:	MIT
 Group:		X11/Applications
 Source0:	https://xorg.freedesktop.org/archive/individual/app/igt-gpu-tools-%{version}.tar.xz
-# Source0-md5:	5c11ed8a9698df5fd6663b027168ab1f
+# Source0-md5:	a38956517259338638cc2e17e3e8720a
 URL:		http://intellinuxgraphics.org/
 BuildRequires:	alsa-lib-devel
 BuildRequires:	bison
@@ -57,6 +57,9 @@ Obsoletes:	xorg-app-intel-gpu-tools < 1.23
 # libunwind is required
 ExclusiveArch:	%{ix86} %{x8664} x32 %{arm} aarch64 hppa ia64 mips ppc ppc64 sh tilegx
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+# igt_ioctl symbol is function pointer, not plain function
+%define		skip_post_check_so	libxe_oa.so.*
 
 %description
 This is a collection of tools for development and testing of the Intel
@@ -126,9 +129,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/intel_*
 %attr(755,root,root) %{_bindir}/lsgpu
 %attr(755,root,root) %{_bindir}/msm_dp_compliance
-%attr(755,root,root) %{_bindir}/xe_reg
+%attr(755,root,root) %{_bindir}/xe-perf-*
 %attr(755,root,root) %{_libdir}/libi915_perf.so.1.5
 %attr(755,root,root) %{_libdir}/libigt.so.0
+%attr(755,root,root) %{_libdir}/libxe_oa.so.1.5
 %ifarch %{ix86} %{x8664} x32
 %attr(755,root,root) %{_bindir}/intel-gen4asm
 %attr(755,root,root) %{_bindir}/intel-gen4disasm
@@ -138,8 +142,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_datadir}/igt-gpu-tools
 %{_datadir}/igt-gpu-tools/registers
 %{_datadir}/igt-gpu-tools/blacklist*.txt
-%{_datadir}/igt-gpu-tools/xe.blocklist.txt
-%{_datadir}/igt-gpu-tools/*.blacklist
+%{_datadir}/igt-gpu-tools/*.blocklist.txt
 %{_datadir}/igt-gpu-tools/*.png
 %{_gtkdocdir}/igt-gpu-tools
 %{_mandir}/man1/intel_*.1*
@@ -148,5 +151,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libi915_perf.so
 %attr(755,root,root) %{_libdir}/libigt.so
+%attr(755,root,root) %{_libdir}/libxe_oa.so
 %{_includedir}/i915-perf
+%{_includedir}/xe-oa
 %{_pkgconfigdir}/i915-perf.pc
+%{_pkgconfigdir}/xe-oa.pc

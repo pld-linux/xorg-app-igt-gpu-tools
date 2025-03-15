@@ -1,12 +1,12 @@
 Summary:	Tools for Intel DRM driver
 Summary(pl.UTF-8):	Narzędzia do sterownika Intel DRM
 Name:		xorg-app-igt-gpu-tools
-Version:	1.30
+Version:	2.0
 Release:	1
 License:	MIT
 Group:		X11/Applications
 Source0:	https://xorg.freedesktop.org/archive/individual/app/igt-gpu-tools-%{version}.tar.xz
-# Source0-md5:	10706e68a57f464408d309ae74bec5e2
+# Source0-md5:	dfd4dd415c3b3e53ddf4d13f4164a62b
 URL:		http://intellinuxgraphics.org/
 BuildRequires:	alsa-lib-devel
 BuildRequires:	bison
@@ -28,6 +28,7 @@ BuildRequires:	gtk-doc >= 1.14
 BuildRequires:	json-c-devel
 BuildRequires:	kmod-devel
 BuildRequires:	libdrm-devel >= 2.4.92
+BuildRequires:	liboping-devel
 BuildRequires:	libunwind-devel
 BuildRequires:	meson >= 0.47.2
 BuildRequires:	ninja >= 1.5
@@ -36,7 +37,7 @@ BuildRequires:	pixman-devel >= 0.36.0
 BuildRequires:	pkgconfig
 BuildRequires:	procps-devel >= 1:3.3
 BuildRequires:	python3-devel >= 1:3.0
-BuildRequires:	rpmbuild(macros) >= 1.736
+BuildRequires:	rpmbuild(macros) >= 2.042
 BuildRequires:	sed >= 4.0
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	udev-devel
@@ -88,18 +89,28 @@ Pliki nagłówkowe biblioteki i915 perf.
 %{__sed} -i -e '1s,/usr/bin/env python3,%{__python3},' tools/intel-gfx-fw-info
 
 %build
-%meson build \
-	-Dchamelium=enabled
+%meson \
+	-Dchamelium=enabled \
+	-Ddocs=enabled \
+	-Dlibunwind=enabled \
+	-Dman=enabled \
+	-Doping=enabled \
+	-Doverlay=enabled \
+	-Drunner=enabled \
+	-Dtestplan=enabled \
+	-Dtests=enabled \
+	-Dvalgrind=disabled \
+	
 
-%ninja_build -C build
+%meson_build
 
 # install fails without prebuilt docs
-%ninja_build -C build igt-gpu-tools-doc
+%meson_build igt-gpu-tools-doc:custom
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%ninja_install -C build
+%meson_install
 
 # tests
 %{__rm} \
@@ -121,6 +132,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/gputop
 %attr(755,root,root) %{_bindir}/i915-perf-*
 %attr(755,root,root) %{_bindir}/igt_comms_decoder
+%attr(755,root,root) %{_bindir}/igt_facts
+%attr(755,root,root) %{_bindir}/igt_power
 %attr(755,root,root) %{_bindir}/igt_results
 %attr(755,root,root) %{_bindir}/igt_resume
 %attr(755,root,root) %{_bindir}/igt_runner
@@ -128,7 +141,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/intel-gfx-fw-info
 %attr(755,root,root) %{_bindir}/intel_*
 %attr(755,root,root) %{_bindir}/lsgpu
-%attr(755,root,root) %{_bindir}/power
 %attr(755,root,root) %{_bindir}/msm_dp_compliance
 %attr(755,root,root) %{_bindir}/xe-perf-*
 %attr(755,root,root) %{_libdir}/libi915_perf.so.1.5

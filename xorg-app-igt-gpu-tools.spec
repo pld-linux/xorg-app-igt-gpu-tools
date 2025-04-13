@@ -61,6 +61,8 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # igt_ioctl symbol is function pointer, not plain function
 %define		skip_post_check_so	libxe_oa.so.*
+# "Building with NDEBUG defined is not supported"
+%define		filterout_cpp		-DNDEBUG
 
 %description
 This is a collection of tools for development and testing of the Intel

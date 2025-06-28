@@ -1,12 +1,12 @@
 Summary:	Tools for Intel DRM driver
 Summary(pl.UTF-8):	Narzędzia do sterownika Intel DRM
 Name:		xorg-app-igt-gpu-tools
-Version:	2.0
-Release:	2
+Version:	2.1
+Release:	1
 License:	MIT
 Group:		X11/Applications
 Source0:	https://xorg.freedesktop.org/archive/individual/app/igt-gpu-tools-%{version}.tar.xz
-# Source0-md5:	dfd4dd415c3b3e53ddf4d13f4164a62b
+# Source0-md5:	e6f66340b8f8d1bc45834757a599de4d
 URL:		http://intellinuxgraphics.org/
 BuildRequires:	alsa-lib-devel
 BuildRequires:	bison
@@ -30,12 +30,12 @@ BuildRequires:	kmod-devel
 BuildRequires:	libdrm-devel >= 2.4.92
 BuildRequires:	liboping-devel
 BuildRequires:	libunwind-devel
-BuildRequires:	meson >= 0.47.2
+BuildRequires:	meson >= 0.52.1
 BuildRequires:	ninja >= 1.5
 BuildRequires:	peg
 BuildRequires:	pixman-devel >= 0.36.0
 BuildRequires:	pkgconfig
-BuildRequires:	procps-devel >= 1:3.3
+BuildRequires:	procps-devel >= 1:4.0.5
 BuildRequires:	python3-devel >= 1:3.0
 BuildRequires:	rpmbuild(macros) >= 2.042
 BuildRequires:	sed >= 4.0
@@ -50,8 +50,10 @@ BuildRequires:	xorg-lib-libpciaccess-devel >= 0.10
 BuildRequires:	xorg-proto-dri2proto-devel >= 2.6
 BuildRequires:	xorg-util-util-macros >= 1.16
 BuildRequires:	xz
+BuildRequires:	zlib-devel
 Requires:	cairo >= 1.17.2
 Requires:	libdrm >= 2.4.92
+Requires:	procps >= 1:4.0.5
 Requires:	xorg-lib-libXrandr >= 1.3
 Requires:	xorg-lib-libpciaccess >= 0.10
 Obsoletes:	xorg-app-intel-gpu-tools < 1.23
@@ -161,6 +163,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/igt-gpu-tools/*.png
 %{_gtkdocdir}/igt-gpu-tools
 %{_mandir}/man1/intel_*.1*
+%{_mandir}/man1/lsgpu.1*
 
 %files devel
 %defattr(644,root,root,755)

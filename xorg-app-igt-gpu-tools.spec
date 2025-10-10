@@ -1,12 +1,12 @@
 Summary:	Tools for Intel DRM driver
 Summary(pl.UTF-8):	Narzędzia do sterownika Intel DRM
 Name:		xorg-app-igt-gpu-tools
-Version:	2.1
+Version:	2.2
 Release:	1
 License:	MIT
 Group:		X11/Applications
 Source0:	https://xorg.freedesktop.org/archive/individual/app/igt-gpu-tools-%{version}.tar.xz
-# Source0-md5:	e6f66340b8f8d1bc45834757a599de4d
+# Source0-md5:	db699c641409097041af91accbc35a91
 URL:		http://intellinuxgraphics.org/
 BuildRequires:	alsa-lib-devel
 BuildRequires:	bison
@@ -104,7 +104,6 @@ Pliki nagłówkowe biblioteki i915 perf.
 	-Dtestplan=enabled \
 	-Dtests=enabled \
 	-Dvalgrind=disabled \
-	
 
 %meson_build
 
@@ -159,7 +158,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_datadir}/igt-gpu-tools
 %{_datadir}/igt-gpu-tools/registers
 %{_datadir}/igt-gpu-tools/blacklist*.txt
-%{_datadir}/igt-gpu-tools/*.blocklist.txt
+%{_datadir}/igt-gpu-tools/*.blocklist*.txt
 %{_datadir}/igt-gpu-tools/*.png
 %{_gtkdocdir}/igt-gpu-tools
 %{_mandir}/man1/intel_*.1*
@@ -167,9 +166,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libi915_perf.so
-%attr(755,root,root) %{_libdir}/libigt.so
-%attr(755,root,root) %{_libdir}/libxe_oa.so
+%{_libdir}/libi915_perf.so
+%{_libdir}/libigt.so
+%{_libdir}/libxe_oa.so
 %{_includedir}/i915-perf
 %{_includedir}/xe-oa
 %{_pkgconfigdir}/i915-perf.pc

@@ -1,12 +1,13 @@
 Summary:	Tools for Intel DRM driver
 Summary(pl.UTF-8):	Narzędzia do sterownika Intel DRM
 Name:		xorg-app-igt-gpu-tools
-Version:	2.2
+Version:	2.3
 Release:	1
 License:	MIT
 Group:		X11/Applications
 Source0:	https://xorg.freedesktop.org/archive/individual/app/igt-gpu-tools-%{version}.tar.xz
-# Source0-md5:	db699c641409097041af91accbc35a91
+# Source0-md5:	8730f343bdd9e22204a707a0908476bf
+Patch0:		igt-gpu-tools-link.patch
 URL:		http://intellinuxgraphics.org/
 BuildRequires:	alsa-lib-devel
 BuildRequires:	bison
@@ -89,6 +90,7 @@ Pliki nagłówkowe biblioteki i915 perf.
 
 %prep
 %setup -q -n igt-gpu-tools-%{version}
+%patch -P0 -p1
 
 %{__sed} -i -e '1s,/usr/bin/env python3,%{__python3},' tools/intel-gfx-fw-info
 
@@ -146,9 +148,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/lsgpu
 %attr(755,root,root) %{_bindir}/msm_dp_compliance
 %attr(755,root,root) %{_bindir}/xe-perf-*
-%attr(755,root,root) %{_libdir}/libi915_perf.so.1.5
-%attr(755,root,root) %{_libdir}/libigt.so.0
-%attr(755,root,root) %{_libdir}/libxe_oa.so.1.5
+%{_libdir}/libi915_perf.so.1.5
+%{_libdir}/libigt.so.0
+%{_libdir}/libxe_oa.so.1.5
 %ifarch %{ix86} %{x8664} x32
 %attr(755,root,root) %{_bindir}/intel-gen4asm
 %attr(755,root,root) %{_bindir}/intel-gen4disasm
@@ -157,7 +159,6 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 %dir %{_datadir}/igt-gpu-tools
 %{_datadir}/igt-gpu-tools/registers
-%{_datadir}/igt-gpu-tools/blacklist*.txt
 %{_datadir}/igt-gpu-tools/*.blocklist*.txt
 %{_datadir}/igt-gpu-tools/*.png
 %{_gtkdocdir}/igt-gpu-tools

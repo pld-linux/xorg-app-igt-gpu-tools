@@ -1,0 +1,11 @@
+--- igt-gpu-tools-2.3/tools/xe-perf/meson.build.orig	2025-12-16 12:31:47.000000000 +0100
++++ igt-gpu-tools-2.3/tools/xe-perf/meson.build	2025-12-18 20:22:14.306981656 +0100
+@@ -1,7 +1,7 @@
+ executable('xe-perf-configs',
+            [ 'xe_perf_configs.c' ],
+            include_directories: inc,
+-           dependencies: [lib_igt_chipset, lib_igt_xe_oa],
++           dependencies: [lib_igt_chipset, lib_igt_xe_oa, lib_igt],
+            install: true)
+ 
+ executable('xe-perf-recorder',

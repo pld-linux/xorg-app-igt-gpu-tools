@@ -1,12 +1,12 @@
 Summary:	Tools for Intel DRM driver
 Summary(pl.UTF-8):	Narzędzia do sterownika Intel DRM
 Name:		xorg-app-igt-gpu-tools
-Version:	2.3
+Version:	2.4
 Release:	1
 License:	MIT
 Group:		X11/Applications
 Source0:	https://xorg.freedesktop.org/archive/individual/app/igt-gpu-tools-%{version}.tar.xz
-# Source0-md5:	8730f343bdd9e22204a707a0908476bf
+# Source0-md5:	341cb6b573ffec2b879029a4c944012b
 Patch0:		igt-gpu-tools-link.patch
 URL:		http://intellinuxgraphics.org/
 BuildRequires:	alsa-lib-devel
@@ -33,6 +33,7 @@ BuildRequires:	liboping-devel
 BuildRequires:	libunwind-devel
 BuildRequires:	meson >= 0.52.1
 BuildRequires:	ninja >= 1.5
+BuildRequires:	pciutils-devel
 BuildRequires:	peg
 BuildRequires:	pixman-devel >= 0.36.0
 BuildRequires:	pkgconfig

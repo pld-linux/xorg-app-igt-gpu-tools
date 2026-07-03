@@ -1,12 +1,12 @@
 Summary:	Tools for Intel DRM driver
 Summary(pl.UTF-8):	Narzędzia do sterownika Intel DRM
 Name:		xorg-app-igt-gpu-tools
-Version:	2.4
+Version:	2.5
 Release:	1
 License:	MIT
 Group:		X11/Applications
 Source0:	https://xorg.freedesktop.org/archive/individual/app/igt-gpu-tools-%{version}.tar.xz
-# Source0-md5:	341cb6b573ffec2b879029a4c944012b
+# Source0-md5:	68895667fd9f0ea1ffdf7cbc2aa6d42f
 Patch0:		igt-gpu-tools-link.patch
 URL:		http://intellinuxgraphics.org/
 BuildRequires:	alsa-lib-devel
@@ -37,7 +37,6 @@ BuildRequires:	pciutils-devel
 BuildRequires:	peg
 BuildRequires:	pixman-devel >= 0.36.0
 BuildRequires:	pkgconfig
-BuildRequires:	procps-devel >= 1:4.0.5
 BuildRequires:	python3-devel >= 1:3.0
 BuildRequires:	rpmbuild(macros) >= 2.042
 BuildRequires:	sed >= 4.0
@@ -55,7 +54,6 @@ BuildRequires:	xz
 BuildRequires:	zlib-devel
 Requires:	cairo >= 1.17.2
 Requires:	libdrm >= 2.4.92
-Requires:	procps >= 1:4.0.5
 Requires:	xorg-lib-libXrandr >= 1.3
 Requires:	xorg-lib-libpciaccess >= 0.10
 Obsoletes:	xorg-app-intel-gpu-tools < 1.23
@@ -162,6 +160,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/igt-gpu-tools/registers
 %{_datadir}/igt-gpu-tools/*.blocklist*.txt
 %{_datadir}/igt-gpu-tools/*.png
+%dir %{_datadir}/igt-gpu-tools/hooks
+%attr(755,root,root) %{_datadir}/igt-gpu-tools/hooks/*.sh
+%{_datadir}/igt-gpu-tools/hooks/*.allowlist
 %{_gtkdocdir}/igt-gpu-tools
 %{_mandir}/man1/intel_*.1*
 %{_mandir}/man1/lsgpu.1*

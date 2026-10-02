@@ -1,12 +1,13 @@
+# TODO: libTSI (unigraf)?
 Summary:	Tools for Intel DRM driver
 Summary(pl.UTF-8):	Narzędzia do sterownika Intel DRM
 Name:		xorg-app-igt-gpu-tools
-Version:	2.5
+Version:	2.6
 Release:	1
 License:	MIT
 Group:		X11/Applications
 Source0:	https://xorg.freedesktop.org/archive/individual/app/igt-gpu-tools-%{version}.tar.xz
-# Source0-md5:	68895667fd9f0ea1ffdf7cbc2aa6d42f
+# Source0-md5:	58d7fd4792da220c270c5106202a4492
 Patch0:		igt-gpu-tools-link.patch
 URL:		http://intellinuxgraphics.org/
 BuildRequires:	alsa-lib-devel
@@ -131,12 +132,12 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc COPYING MAINTAINERS NEWS README.md
-%attr(755,root,root) %{_bindir}/amd_hdmi_compliance
 %attr(755,root,root) %{_bindir}/dpcd_reg
 %attr(755,root,root) %{_bindir}/gputop
 %attr(755,root,root) %{_bindir}/i915-perf-*
 %attr(755,root,root) %{_bindir}/igt_comms_decoder
 %attr(755,root,root) %{_bindir}/igt_facts
+%attr(755,root,root) %{_bindir}/igt_hdmi_compliance
 %attr(755,root,root) %{_bindir}/igt_power
 %attr(755,root,root) %{_bindir}/igt_results
 %attr(755,root,root) %{_bindir}/igt_resume
